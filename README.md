@@ -195,3 +195,7 @@ git push origin feature/new-feature
 ```
 
 5. Open a pull request.
+
+## Vercel Deployed Link
+
+[Visit Vercel]([https://vercel.com](https://harshita-gupta-wasserstoff-ai-intern-task.vercel.app/))
