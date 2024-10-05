@@ -80,6 +80,8 @@ This project is part of Wasserstoff AI Internship Task, aiming to create a robus
 
 **Concurrency with ThreadPoolExecutor**
 
+**Other Libraries from Requirement.txt**
+
 ### Docker: For containerization and easier deployment.
 
 ### Vercel: For hosting and deployment.
