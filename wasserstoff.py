@@ -19,7 +19,7 @@ import nltk
 from spacy.lang.en.stop_words import STOP_WORDS
 from sklearn.feature_extraction.text import TfidfTransformer, CountVectorizer
 import string
-
+import streamlit as st
 import time
 import pandas as pd
 import logging
@@ -989,16 +989,21 @@ documents = collection.find()
 # print(f"Deleted {delete_result.deleted_count} documents.")
 
 def main():
-    # Get folder path from environment variable
-    folder_path = os.getenv("FOLDER_PATH")
+    st.title("PDF Keyword and Summary Generator")
 
-    if not folder_path or not os.path.isdir(folder_path):
-        print("Invalid path. Please make sure the folder exists.")
-        return
+    # Input for folder path
+    folder_path = st.text_input("Enter the folder path containing PDF files:")
 
-    # Call the final_project function with the provided folder path
-    final_project(folder_path)
+    if st.button("Process PDFs"):
+        if not os.path.isdir(folder_path):
+            st.error("Invalid path. Please make sure the folder exists.")
+        else:
+            results = final_project(folder_path)
+            st.success("Processing completed!")
+            st.write("Results:")
+            st.write(results)
 
+# Check if the script is run directly (not imported)
 if __name__ == "__main__":
     main()
 
