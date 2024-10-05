@@ -989,17 +989,31 @@ documents = collection.find()
 # print(f"Deleted {delete_result.deleted_count} documents.")
 
 def main():
+    # Get folder path from environment variable
+    folder_path = os.getenv("FOLDER_PATH")
+
+    if not folder_path or not os.path.isdir(folder_path):
+        print("Invalid path. Please make sure the folder exists.")
+        return
+
+    # Call the final_project function with the provided folder path
+    final_project(folder_path)
+
+if __name__ == "__main__":
+    main()
+
+#def main():
     # Prompt user for folder path
     folder_path = input("Please enter the folder path where the PDFs are stored: ").strip()
 
     # Validate the folder path
-    if not os.path.isdir(folder_path):
-        print("Invalid path. Please make sure the folder exists.")
-        return
+ #   if not os.path.isdir(folder_path):
+  #      print("Invalid path. Please make sure the folder exists.")
+   #     return
 
     # Call the final_project function with the user-provided folder path
-    final_project(folder_path)
+#    final_project(folder_path)
 
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+ #   main()
