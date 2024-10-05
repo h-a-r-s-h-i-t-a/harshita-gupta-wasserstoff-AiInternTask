@@ -30,10 +30,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # In my project I haven't considered the images if any present within the PDF
 # URL's, emails, website links atc are removed
 
-"""##Text and Metadata Extraction
+#Text and Metadata Extraction
 
-###Reading Folder and path of different PDF files from the folder
-"""
+#Reading Folder and path of different PDF files from the folder
 
 
 # function to read all PDF files from a given folder
@@ -64,11 +63,12 @@ def read_pdf_from_folder(folder_path):
 # Test my code for a folder
 #files = read_pdf_from_folder('/content/Certificate')
 
-"""###Ingest PDF's Metadata and Text"""
+
+#Ingest PDF's Metadata and Text"""
 
 
 
-"""####Extract Metadata"""
+#Extract Metadata
 
 # Fn to extract metadata from pdf
 def extract_pdf_metadata(file_path):
@@ -123,7 +123,7 @@ def extract_pdf_metadata(file_path):
 
 
 
-"""####Choose Text Extraction Method"""
+#Choose Text Extraction Method
 
 # going to use 2 different libraries for text extraction from pdf
 # choice among two will be based on the complexity of the pdf, which will be determined with the function defined below
@@ -132,7 +132,7 @@ def extract_pdf_metadata(file_path):
 # 2. pdfminer.six : when there are multiple font, many images with annotations, and complex layouts. This is known for accurate and robust extraction compared to another but is slow
 
 
-"""#####Analyzing Fonts"""
+#Analyzing Fonts
 
 # Analyzing Fonts
 
@@ -188,7 +188,7 @@ def analyze_fonts(file_path):
   return font_list
 
 
-"""#####Analyze structure for images, tables, annotations"""
+#Analyze structure for images, tables, annotations"""
 
 
 # fn to analyze str of PDF and count images, annotations and tables
@@ -232,7 +232,7 @@ def analyze_structure(file_path):
 
 
 
-"""#####Check for presence of Layers in PDF"""
+#Check for presence of Layers in PDF"""
 
 # Fn to check presence of layers in PDF
 def check_layers(file_path):
@@ -266,7 +266,7 @@ def check_layers(file_path):
 
 
 
-"""#####Analyze Layout Complexity(Text and Layout Coordinates)"""
+#Analyze Layout Complexity(Text and Layout Coordinates)"""
 
 # Analyze for complexity in PDF
 def analyze_layout_complexity(file_path):
@@ -296,7 +296,7 @@ def analyze_layout_complexity(file_path):
   return complexity_score
 
 
-"""#####Decision Making among 2 libraries"""
+#Decision Making among 2 libraries"""
 
 # decide which library to choose for text extraction with a thought that complex PDF's go with pdfminer.six and simple ones go with PyMuPDF
 def select_extraction_method(file_path):
@@ -324,11 +324,8 @@ def select_extraction_method(file_path):
     return 'PyMuPDF' # (Fast for simple PDF: PDF is simple)
 
 
-"""####Extract Text
+#Extract Text
 
-
-
-"""
 
 
 
@@ -367,7 +364,7 @@ def extracting_text(file_path):
 
 
 
-"""###Final extraction of metadata and text"""
+#Final extraction of metadata and text"""
 
 def full(folder_path):
   # Get list of all PDF's from a folder
@@ -397,7 +394,7 @@ def full(folder_path):
 
 
 
-"""##Transfer of metadata to MongoDB"""
+#Transfer of metadata to MongoDB"""
 
 # Going to use MongoDB Atlas as it is a good option to work with when comes to a project associated with the team ,
 # mongodb+srv://wasserstoff:wasserstoff@wasserstoff.ql0x5.mongodb.net/?retryWrites=true&w=majority&appName=Wasserstoff
@@ -462,14 +459,13 @@ documents = collection.find()
 #for document in documents:
  #   print(document)
 
+#Summarization and Keyword Extraction
 
-"""##Summarization and Keyword Extraction
-
-###Text Preprocessing
-"""
+#Text Preprocessing
 
 
-"""###Basic Requirements for Keyword and Summary"""
+
+#Basic Requirements for Keyword and Summary"""
 
 
 
@@ -525,7 +521,7 @@ def set_vectorization_params(text):
   # Return ngram_range and max_features
   return ngram_range, max_features
 
-"""###Keyword Extraction"""
+#Keyword Extraction"""
 
 def lemma_stopword_KE(text):
 
@@ -540,7 +536,7 @@ def lemma_stopword_KE(text):
   # Return text after lemmatization and stopword and punctuation removal
   return txt
 
-"""####Vectorization"""
+#Vectorization"""
 
 
 # Vectorization and TF-IDF
@@ -561,7 +557,7 @@ def vectorize(text):
 
   return cv, tfidf_transformer
 
-"""####From TF-IDF"""
+#From TF-IDF"""
 
 def get_dynamic_topk_and_threshold(text):
   # Get pdf size based on word count
@@ -629,7 +625,7 @@ def get_keywords_with_combined_approach(text):
 
   return filtered_keywords
 
-"""####Keywords based on POS tag and NER"""
+#Keywords based on POS tag and NER"""
 
 # Filter keywords using POS and NER
 def filter_keywords_by_pos_and_ner(text):
@@ -670,7 +666,7 @@ def filter_keywords_by_pos_and_ner(text):
   # Return list of keywords
   return keywords
 
-"""####Combined Keywords from Both Approach"""
+#Combined Keywords from Both Approach"""
 
 # I'm not going to use this as based on trials this approach of POS & NER requires domain specific list of what to be included in keywords, and this project
 # more being general for now doesn't go well with this approach
@@ -687,7 +683,7 @@ def combined_keywords(text):
   combined_keywords = keywords_from_tfidf.union(keywords_from_pos_and_ner)
   return combined_keywords
 
-"""####Main fn for keywords"""
+#Main fn for keywords"""
 
 def main_keyword(text):
   # Pass text to 2nd level preprocessing
@@ -698,11 +694,11 @@ def main_keyword(text):
   return list(keywords)
 
 
-"""###Text Summarization"""
+#Text Summarization"""
 
 
 
-"""####Processing"""
+#Processing"""
 
 def lemma_stopword_TS(text):
 
@@ -743,7 +739,7 @@ def lemma_stopword_TS(text):
 
   return txt
 
-"""####Vectorization"""
+#Vectorization"""
 
 def vectorize_for_summary(text):
   doc = nlp(text)
@@ -772,7 +768,7 @@ def vectorize_for_summary(text):
 
   return cv, tfidf_transformer, sentences, preprocessed_sentences
 
-"""####Ranking text based on TF-IDF score"""
+#Ranking text based on TF-IDF score"""
 
 def determine_summary_length(size):
 
@@ -821,7 +817,7 @@ def select_top_sentences(sorted_sentences, sentences, summary_length):
 
   return top_sentences
 
-"""####Generate Summary"""
+#Generate Summary"""
 
 def generate_summary(text):
   cv, tfidf_transformer, sentences, preprocessed_sentences = vectorize_for_summary(text)
@@ -842,7 +838,7 @@ def generate_summary(text):
   return summary
 
 
-"""####Main fn for summary"""
+#Main fn for summary"""
 
 def main_summary(text):
   # pass text for 2nd level of preprocessing
@@ -856,7 +852,7 @@ def main_summary(text):
 
 
 
-"""###Final fn for both text and summary"""
+#Final fn for both text and summary"""
 
 def summary_and_keyword(text):
   # Pass text to respective fn to get summary and text
@@ -868,31 +864,30 @@ def summary_and_keyword(text):
 
 
 
-"""##Update Summary and Keyword to MongoDB"""
+#Update Summary and Keyword to MongoDB"""
 
 def update_mongodb_with_summary_and_keywords(inserted_id, summary, keywords):
 
   # Code to update MongoDB with the summary and keywords
   collection.update_one({"_id": inserted_id}, {"$set": {"summary": summary, "keywords": keywords}})
 
-"""##Final Project
+#Final Project
 
-***Final Project Code Summary:***
+#Final Project Code Summary:***
 
-This code processes PDF documents to extract summaries and keywords from their text. Key features include:
+#This code processes PDF documents to extract summaries and keywords from their text. Key features include:
 
-**Text Processing**: Prepares text for summary and keyword extraction.
+#Text Processing**: Prepares text for summary and keyword extraction.
 
-**Concurrency**: Uses ThreadPoolExecutor to handle multiple PDFs simultaneously for improved efficiency.
+#Concurrency**: Uses ThreadPoolExecutor to handle multiple PDFs simultaneously for improved efficiency.
 
-**Error Handling:** Implements try-except blocks to manage errors without disrupting the pipeline.
+#Error Handling:** Implements try-except blocks to manage errors without disrupting the pipeline.
 
-**MongoDB Integration:** Uploads extracted summaries, keywords, and metadata to a MongoDB database named pdf_db.
+#MongoDB Integration:** Uploads extracted summaries, keywords, and metadata to a MongoDB database named pdf_db.
 
-**Performance Logging:** Tracks processing time for each document.
+#Performance Logging:** Tracks processing time for each document.
 
-The final_project(folder_path) function serves as the entry point, allowing users to process all PDFs in a specified folder and receive performance metrics, summary, keywords and updation of same in MongDB alongwith Metadata.
-"""
+#The final_project(folder_path) function serves as the entry point, allowing users to process all PDFs in a specified folder and receive performance metrics, summary, keywords and updation of same in MongDB alongwith Metadata.
 
 
 
@@ -926,7 +921,9 @@ def process_text_and_update(id_text_tuple):
             'Start Time': start_time,
             'End Time': end_time,
             'Processing Time (sec)': processing_time,
-            'Status': 'Success'
+            'Status': 'Success',
+            'Summary': summary,  # Include summary
+            'Keywords': keywords #include keywords
         }
 
     except Exception as e:
@@ -939,7 +936,9 @@ def process_text_and_update(id_text_tuple):
             'Start Time': start_time,
             'End Time': end_time,
             'Processing Time (sec)': end_time - start_time,
-            'Status': f"Failed - {e}"
+            'Status': f"Failed - {e}",
+            'Summary': None,  # Ensure Summary is included
+            'Keywords': None  # Ensure Keywords is included
         }
 
 def final_project(folder_path):
@@ -951,6 +950,8 @@ def final_project(folder_path):
         inserted_ids_list = insert_metadata_to_mongodb(metadata_list)
 
         performance_metrics = []
+        summaries = []  # List to hold summaries
+        keywords = []  # List to hold keywords
 
         # Use ThreadPoolExecutor to process each PDF concurrently
         with ThreadPoolExecutor() as executor:
@@ -962,6 +963,10 @@ def final_project(folder_path):
                 result = future.result()
                 performance_metrics.append(result)
 
+                # Append the summary and keywords to respective lists
+                summaries.append(result['Summary'])
+                keywords.append(result['Keywords'])
+
         # Create a DataFrame from the performance metrics
         performance_metrics_df = pd.DataFrame(performance_metrics)
 
@@ -969,8 +974,12 @@ def final_project(folder_path):
         logging.info("Processing complete for all documents.")
         print(performance_metrics_df)
 
+        # Return performance metrics DataFrame, summaries, and keywords
+        return performance_metrics_df, summaries, keywords
+
     except Exception as e:
         logging.error(f"Error in final_project: {e}")
+        return None, None, None  # Return None for all if an error occurs
 
  #final_project('/content/w_test_folder')
 
@@ -998,27 +1007,38 @@ def main():
         if not os.path.isdir(folder_path):
             st.error("Invalid path. Please make sure the folder exists.")
         else:
-            results = final_project(folder_path)
+            # Call the final_project function and unpack the results
+            performance_df, summaries, keywords = final_project(folder_path)
+
+            # Display processing results
             st.success("Processing completed!")
-            st.write("Results:")
-            st.write(results)
+
+            # Display performance metrics
+            st.write("Performance Metrics:")
+            if performance_df is not None:
+                st.dataframe(performance_df)  # Display the performance metrics DataFrame
+            else:
+                st.error("No performance metrics returned.")
+
+            # Display summaries
+            st.write("Summaries:")
+            if summaries:
+                for i, summary in enumerate(summaries):
+                    st.write(f"Document {i + 1}: {summary if summary else 'Processing failed or summary unavailable.'}")
+            else:
+                st.write("No summaries returned.")
+
+            # Display keywords
+            st.write("Keywords:")
+            if keywords:
+                for i, keyword in enumerate(keywords):
+                    st.write(
+                        f"Document {i + 1}: {keyword if keyword else 'Processing failed or keywords unavailable.'}")
+            else:
+                st.write("No keywords returned.")
+
 
 # Check if the script is run directly (not imported)
 if __name__ == "__main__":
     main()
 
-#def main():
-    # Prompt user for folder path
-    folder_path = input("Please enter the folder path where the PDFs are stored: ").strip()
-
-    # Validate the folder path
- #   if not os.path.isdir(folder_path):
-  #      print("Invalid path. Please make sure the folder exists.")
-   #     return
-
-    # Call the final_project function with the user-provided folder path
-#    final_project(folder_path)
-
-
-#if __name__ == "__main__":
- #   main()
