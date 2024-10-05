@@ -199,3 +199,7 @@ git push origin feature/new-feature
 ## Vercel Deployed Link
 
 [Visit Vercel](https://harshita-gupta-wasserstoff-ai-intern-task.vercel.app/)
+
+## Link toVideo Presentation
+
+[Watch the video explanation](https://www.youtube.com/watch?v=DDpnZ1fTEK4)
