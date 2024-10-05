@@ -201,7 +201,11 @@ git push origin feature/new-feature
 [Visit Vercel](https://harshita-gupta-wasserstoff-ai-intern-task.vercel.app/)
 
 ## Render Deploy Link
+Due to some reason project is not working on vercel so did it on render
 
+[Visit Render](https://harshita-gupta-wasserstoff-aiinterntask-1.onrender.com/)
+
+[Project Screenshot](https://github.com/h-a-r-s-h-i-t-a/harshita-gupta-wasserstoff-AiInternTask/blob/master/Screenshot%202024-10-05%20142144.png?raw=true)
 
 ## Link toVideo Presentation
 
